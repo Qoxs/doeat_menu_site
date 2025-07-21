@@ -1,18 +1,25 @@
   <title>먹고 싶은 저녁 메뉴 추천 받기</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
   <body>
     <div class="container-center">
       <div class="logo">
         <img src="./images/doeat_logo.png" alt="DoEat 로고">
       </div>
       <div class="main-title">먹고 싶은 저녁 메뉴 추천 받기</div>
-      <div class="recommend-box" id="recommend-box">
+      <div id="recommend-box-wrapper"></div>
+      <button class="main-cta-btn" id="main-cta-btn">🔥 100원 저메추 추천 받기! 🔥</button>
+    </div>
+    <template id="recommend-box-template">
+      <div class="recommend-box show" id="recommend-box">
         <div class="recommend-title">오늘의 저녁 메뉴 추천</div>
         <div class="recommend-menu" id="menu-name"></div>
         <div class="recommend-desc" id="menu-desc"></div>
-        <button class="cta-btn" id="cta-btn" onclick="window.open('https://home.doeat.io/49t35l', '_blank')">이 메뉴 지금 당장 100원으로 집에서 무료 배달 받기</button>
+        <button class="cta-btn" id="cta-btn" onclick="window.open('https://home.doeat.io/49t35l', '_blank')">이 메뉴 지금 당장 100원으로<br>집에서 무료 배달 받기!</button>
       </div>
-    </div>
-    <button class="main-cta-btn" id="main-cta-btn">🔥 100원 저메추 추천 받기! 🔥</button>
+    </template>
     <script>
       // 메뉴 데이터 (카테고리 구분 없이 전체 합침)
       const menuData = [
@@ -43,57 +50,58 @@
         { name: '쌀국수', desc: '담백하고 깔끔한 국물 요리!' }
       ];
       function showRandomMenu() {
+        // 기존 추천 박스 제거
+        const wrapper = document.getElementById('recommend-box-wrapper');
+        wrapper.innerHTML = '';
+        // 템플릿 복사
+        const template = document.getElementById('recommend-box-template');
+        const clone = template.content.cloneNode(true);
+        // 랜덤 메뉴 삽입
         const pick = menuData[Math.floor(Math.random() * menuData.length)];
-        document.getElementById('menu-name').textContent = pick.name;
-        document.getElementById('menu-desc').textContent = pick.desc;
+        clone.getElementById('menu-name').textContent = pick.name;
+        clone.getElementById('menu-desc').textContent = pick.desc;
+        wrapper.appendChild(clone);
       }
-      // 추천 박스는 처음에 숨김, 버튼 클릭 시만 보임
       document.getElementById('main-cta-btn').onclick = function() {
         showRandomMenu();
-        document.getElementById('recommend-box').classList.add('show');
       };
     </script> 
   </body>
   <style>
     html, body {
-      height: 100%;
+      width: 100vw;
+      height: 100dvh;
+      min-height: 100dvh;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
     body {
-      min-height: 100dvh;
-      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
       font-family: 'Montserrat', Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100vw;
-      overflow-x: hidden;
-      padding: 0;
     }
     .container-center {
+      width: 100vw;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 100vw;
-      min-height: 100dvh;
-      min-height: 100vh;
-      position: static;
-      flex: 1 0 auto;
     }
     .logo {
-      margin-bottom: 0.7rem;
+      margin-bottom: 1.2rem;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .logo img {
       max-width: 110px;
-      width: 22vw;
       min-width: 70px;
+      width: 22vw;
       height: auto;
       display: block;
     }
@@ -107,13 +115,13 @@
     }
     .recommend-box {
       background: #fff;
-      border-radius: 1.5rem;
-      box-shadow: 0 4px 24px rgba(79,70,229,0.10);
-      padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(79,70,229,0.08);
+      padding: 1.5rem 1.2rem 1rem 1.2rem;
       text-align: center;
-      max-width: 400px;
+      max-width: 320px;
       width: 90vw;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
       animation: fadeIn 1s;
       margin-left: auto;
       margin-right: auto;
@@ -158,29 +166,30 @@
       outline: none;
       animation: fadeInUp 0.7s;
       width: 100%;
-      max-width: 340px;
+      max-width: 320px;
       display: inline-block;
     }
     .main-cta-btn {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100vw;
-      max-width: 100vw;
-      padding: 1.3rem 0;
-      font-size: 1.25rem;
+      margin-top: 1.1rem;
+      margin-bottom: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0.9rem 1.2rem;
+      font-size: 1.1rem;
       font-weight: 900;
       color: #fff;
       background: linear-gradient(90deg,#ff1b6b 0%,#7367f0 100%);
       border: none;
-      border-radius: 0;
-      box-shadow: 0 -2px 16px rgba(255,27,107,0.10);
+      border-radius: 1rem;
+      box-shadow: 0 1px 4px rgba(255,27,107,0.08);
       cursor: pointer;
       transition: background 0.2s,transform 0.2s;
       outline: none;
       letter-spacing: 1px;
-      z-index: 100;
       animation: fadeInUp 0.7s;
+      width: auto;
+      max-width: 280px;
+      display: block;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(30px); }
@@ -191,11 +200,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 500px) {
-      .logo img { max-width: 80px; min-width: 50px; }
-      .main-title { font-size: 1.2rem; margin-bottom: 0.7rem; }
-      .recommend-menu { font-size: 1.3rem; }
-      .recommend-box { padding: 1.2rem 0.5rem 1rem 0.5rem; max-width: 98vw; }
-      .cta-btn { font-size: 1rem; padding: 1rem 0.5rem; max-width: 98vw; }
-      .main-cta-btn { font-size: 1.05rem; padding: 1rem 0; }
+      .logo img { max-width: 120px; min-width: 80px; }
+      .main-title { font-size: 1.7rem; margin-bottom: 1.3rem; }
+      .recommend-menu { font-size: 2rem; }
+      .recommend-box { padding: 1.7rem 1rem 1.3rem 1rem; max-width: 99vw; }
+      .cta-btn, .main-cta-btn { font-size: 1.2rem; padding: 1.2rem 1rem; max-width: 99vw; }
+      .recommend-box, .main-cta-btn { max-width: 98vw; }
+      .recommend-box { max-width: 98vw; padding-left: 1.2rem; padding-right: 1.2rem; }
+      .recommend-box { max-width: 95vw; }
     }
   </style> 
