@@ -5,7 +5,7 @@
         <img src="./images/doeat_logo.png" alt="DoEat 로고">
       </div>
       <div class="main-title">먹고 싶은 저녁 메뉴 추천 받기</div>
-      <div class="recommend-box" id="recommend-box" style="display:none;">
+      <div class="recommend-box" id="recommend-box">
         <div class="recommend-title">오늘의 저녁 메뉴 추천</div>
         <div class="recommend-menu" id="menu-name"></div>
         <div class="recommend-desc" id="menu-desc"></div>
@@ -42,14 +42,15 @@
         { name: '햄버거', desc: '든든하고 맛있는 한 끼!' },
         { name: '쌀국수', desc: '담백하고 깔끔한 국물 요리!' }
       ];
-      document.getElementById('main-cta-btn').onclick = function() {
+      function showRandomMenu() {
         const pick = menuData[Math.floor(Math.random() * menuData.length)];
         document.getElementById('menu-name').textContent = pick.name;
         document.getElementById('menu-desc').textContent = pick.desc;
-        document.getElementById('recommend-box').style.display = 'block';
-        setTimeout(function() {
-          document.getElementById('cta-btn').classList.add('show');
-        }, 500);
+      }
+      // 추천 박스는 처음에 숨김, 버튼 클릭 시만 보임
+      document.getElementById('main-cta-btn').onclick = function() {
+        showRandomMenu();
+        document.getElementById('recommend-box').classList.add('show');
       };
     </script> 
   </body>
@@ -60,6 +61,7 @@
       padding: 0;
     }
     body {
+      min-height: 100dvh;
       min-height: 100vh;
       background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
       font-family: 'Montserrat', Arial, sans-serif;
@@ -67,22 +69,20 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
-      box-sizing: border-box;
-      padding: 0;
       width: 100vw;
       overflow-x: hidden;
+      padding: 0;
     }
     .container-center {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
       width: 100vw;
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 1;
+      min-height: 100dvh;
+      min-height: 100vh;
+      position: static;
+      flex: 1 0 auto;
     }
     .logo {
       margin-bottom: 0.7rem;
@@ -117,9 +117,14 @@
       animation: fadeIn 1s;
       margin-left: auto;
       margin-right: auto;
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+    }
+    .recommend-box.show {
+      display: flex;
+      animation: fadeIn 1s;
     }
     .recommend-title {
       font-size: 1.3rem;
@@ -139,7 +144,6 @@
       margin-bottom: 0.7rem;
     }
     .cta-btn {
-      display: none;
       margin-top: 1.3rem;
       padding: 1.2rem 1.2rem;
       font-size: 1.15rem;
@@ -155,10 +159,7 @@
       animation: fadeInUp 0.7s;
       width: 100%;
       max-width: 340px;
-    }
-    .cta-btn.show {
       display: inline-block;
-      animation: fadeInUp 0.7s;
     }
     .main-cta-btn {
       position: fixed;
