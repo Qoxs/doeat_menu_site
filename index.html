@@ -1,0 +1,52 @@
+  <title>먹고 싶은 저녁 메뉴 추천 받기</title>
+  <body>
+    <div class="logo">
+      <img src="./images/doeat_logo.png" alt="DoEat 로고" style="width:100%; max-width:126px; height:auto;">
+    </div>
+    <div class="main-title" style="font-size:2rem; font-weight:700; color:#4f46e5; margin-bottom:2rem; text-align:center;">먹고 싶은 저녁 메뉴 추천 받기</div>
+    <div class="recommend-box" id="recommend-box" style="display:none;">
+      <div class="recommend-title">오늘의 저녁 메뉴 추천</div>
+      <div class="recommend-menu" id="menu-name"></div>
+      <div class="recommend-desc" id="menu-desc"></div>
+      <button class="cta-btn" id="cta-btn" onclick="window.open('https://home.doeat.io/49t35l', '_blank')">이 메뉴 지금 당장 100원으로 집에서 무료 배달 받기</button>
+    </div>
+    <button class="main-cta-btn" id="main-cta-btn" style="margin-top:2rem; padding:1.3rem 2.5rem; font-size:1.3rem; font-weight:900; color:#fff; background:linear-gradient(90deg,#ff1b6b 0%,#7367f0 100%); border:none; border-radius:2.5rem; box-shadow:0 4px 24px rgba(255,27,107,0.15); cursor:pointer; transition:background 0.2s,transform 0.2s; outline:none; animation:fadeInUp 0.7s; letter-spacing:1px;">🔥 100원 저메추 추천 받기! 🔥</button>
+    <script>
+      // 메뉴 데이터 (카테고리 구분 없이 전체 합침)
+      const menuData = [
+        { name: '비빔밥', desc: '다양한 나물과 고소한 고추장, 든든한 한 끼!' },
+        { name: '김치찌개', desc: '얼큰하고 깊은 맛의 국민 찌개!' },
+        { name: '불고기', desc: '달콤짭짤한 소고기 볶음, 모두가 좋아하는 맛!' },
+        { name: '된장찌개', desc: '구수한 된장과 신선한 채소의 조화!' },
+        { name: '삼겹살', desc: '구워 먹는 재미와 고소함이 가득!' },
+        { name: '짜장면', desc: '달콤한 춘장과 쫄깃한 면발의 만남!' },
+        { name: '짬뽕', desc: '얼큰한 국물과 해산물의 조화!' },
+        { name: '탕수육', desc: '바삭한 튀김과 새콤달콤 소스의 환상 조합!' },
+        { name: '마파두부', desc: '매콤하고 부드러운 두부 요리!' },
+        { name: '초밥', desc: '신선한 생선과 밥의 완벽한 조화!' },
+        { name: '돈까스', desc: '바삭한 튀김옷과 부드러운 고기!' },
+        { name: '우동', desc: '쫄깃한 면발과 따뜻한 국물!' },
+        { name: '규동', desc: '달콤한 소스와 소고기의 만남!' },
+        { name: '떡볶이', desc: '매콤달콤한 소스와 쫄깃한 떡!' },
+        { name: '김밥', desc: '다양한 재료가 한입에 쏙!' },
+        { name: '순대', desc: '쫄깃한 순대와 고소한 소금의 조화!' },
+        { name: '라면', desc: '언제 먹어도 맛있는 국민 간식!' },
+        { name: '파스타', desc: '다양한 소스와 면의 환상적인 만남!' },
+        { name: '피자', desc: '치즈와 토핑이 듬뿍!' },
+        { name: '스테이크', desc: '육즙 가득한 고급 요리!' },
+        { name: '리조또', desc: '부드럽고 고소한 쌀요리!' },
+        { name: '샐러드', desc: '신선한 채소와 드레싱의 건강한 조화!' },
+        { name: '치킨', desc: '바삭하고 촉촉한 국민 야식!' },
+        { name: '햄버거', desc: '든든하고 맛있는 한 끼!' },
+        { name: '쌀국수', desc: '담백하고 깔끔한 국물 요리!' }
+      ];
+      document.getElementById('main-cta-btn').onclick = function() {
+        const pick = menuData[Math.floor(Math.random() * menuData.length)];
+        document.getElementById('menu-name').textContent = pick.name;
+        document.getElementById('menu-desc').textContent = pick.desc;
+        document.getElementById('recommend-box').style.display = 'block';
+        setTimeout(function() {
+          document.getElementById('cta-btn').classList.add('show');
+        }, 500);
+      };
+    </script> 
